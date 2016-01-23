@@ -1,0 +1,29 @@
+ <html>
+	<head>
+		<meta charset="utf-8" />
+		<style>
+			iframe
+			{
+				height:100%;
+				width:100%;
+			}
+		</style>
+	</head>
+	<body>
+	<script>
+		function buttonClick1()
+		{
+			document.getElementById("show").src="sheet1.html";
+		}
+		function buttonClick2()
+		{
+			document.getElementById("show").src="sheet2.html";
+		}
+	</script>
+	</script>
+	<button onclick=buttonClick1()>歷年前幾大癌症死亡人數</button>
+	<button onclick=buttonClick2()>主要癌症平均死亡年齡</button>
+	<iframe src="sheet1.html" id="show">
+	</iframe>
+	</body>
+</html>

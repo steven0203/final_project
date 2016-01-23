@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<link rel="stylesheet" href="./css/bar.css">
+<style>
+
+path {
+  stroke: #fff;
+}
+
+
+p.cancer{
+	position:absolute;
+	top: 300px;
+	left:600px;
+	font-size:20px;
+
+}
+
+p.age{
+	position:absolute;
+	top: 300px;
+	left: 600px;
+	font-size:50px;
+}
+
+h2.secondTitle{
+	position:absolute;
+	top: 600px;
+	left: 40px;
+}
+
+
+
+</style>
+<body>
+<h1>主要癌症平均死亡年齡</h1>
+<script src="./js/d3/d3.min.js"></script>
+<script src="./js/d3/d3.tip.v0.6.3.js"></script>
+<script src="./js/bar.js"></script>
+<script>
+
+var width = 500,
+    height = 500,
+    radius = (Math.min(width, height) / 2) - 10;
+
+var formatNumber = d3.format(",d");
+
+var x = d3.scale.linear()
+    .range([0, 2 * Math.PI]);
+
+var y = d3.scale.sqrt()
+    .range([0, radius]);
+
+var color = d3.scale.category20c();
+
+var partition = d3.layout.partition()
+    .value(function(d) { return d.size; });
+
+var arc = d3.svg.arc()
+    .startAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x))); })
+    .endAngle(function(d) { return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx))); })
+    .innerRadius(function(d) { return Math.max(0, y(d.y)); })
+    .outerRadius(function(d) { return Math.max(0, y(d.y + d.dy)); });
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + (height / 2) + ")");
+
+
+var choise =d3.select("body").append("p")
+	.attr("class","cancer")
+	.text("");
+
+var ageWord=d3.select("body").append("p")
+	.attr("class","age");
+	
+
+var Title2=d3.select("body").append("h2")
+	.attr("class","secondTitle");
+var barPosition={"position":"absolute","top": "600px","left":"20px"};
+
+var barSvg=initialBarSvg(barPosition);
+d3.json("./data/cancer.json", function(error, root) {
+  if (error) throw error;
+
+	svg.selectAll("path")
+      .data(partition.nodes(root))
+      .enter().append("path")
+      .attr("d", arc)
+      .style("fill", function(d) { return color((d.children ? d : d.parent).name); })
+      .on("click", click)
+      .append("title")
+      .text(function(d) { return d.name; });
+	var name=svg.selectAll("text")
+		.data(partition.nodes(root))
+		.enter().append("text")
+		.attr("x", function(d){return Math.cos(x(d.x + d.dx/2) - Math.PI/2) * y(d.y + d.dy/2);})
+		.attr("y", function(d){return Math.sin(x(d.x + d.dx/2) - Math.PI/2) * y(d.y + d.dy/2);})
+		.attr("text-anchor", "middle")
+		.style("font-size", "8pt")
+		.text(function(d) { return d.name; })
+        .on("click", click);
+	
+
+function click(d) {
+  var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
+        yd = d3.interpolate(y.domain(), [d.y, 1]),
+        yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
+ svg.transition()
+      .duration(750)
+      .tween("scale", function() {
+        return function(t) { x.domain(xd(t)); y.domain(yd(t)).range(yr(t)); };
+      })
+    .selectAll("path")
+      .attrTween("d", function(d) { return function() { return arc(d); }; });
+ name.transition()
+	  .duration(750)
+      .attrTween("x", function(d){return function(t){
+        x.domain(xd(t)); y.domain(yd(t)).range(yr(t));
+	 	return Math.cos(x(d.x + d.dx/2) - Math.PI/2) * y(d.y + d.dy/2);};})
+      .attrTween("y", function(d){return function(t){
+        x.domain(xd(t)); y.domain(yd(t)).range(yr(t));
+	 	return Math.sin(x(d.x + d.dx/2) - Math.PI/2) * y(d.y + d.dy/2);};})	
+      .attrTween("opacity", function(d){return function(t){
+        x.domain(xd(t)); y.domain(yd(t)).range(yr(t));
+	 	return  x(d.x) >=0 && x(d.x) < 2*Math.PI?1:0;};});
+ if(d.text=="全癌症")
+ {
+ 	choise.text("");
+	ageWord.text("");
+	barSvg.selectAll("*").remove();
+	Title2.text("");
+ }
+ else
+ {
+ 	choise.text(d.text+"103年平均死亡年齡");
+	ageWord.text(d.data+"歲");
+	barSvg.selectAll("*").remove();
+	drawBar("./data/"+d.fileName,barSvg);
+	Title2.text("歷年"+d.text+"平均死亡年齡");
+ }
+ 	
+}
+});
+
+
+
+</script>

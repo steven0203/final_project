@@ -1,0 +1,45 @@
+{
+ "name": "癌症",
+ "children": [
+  {
+   "name": "男性",
+   "children": [
+      {"name": "肺癌", "size": 10,"text":"男性肺癌","data":71.2,"fileName":"B1.csv" },
+      {"name": "肝癌", "size": 10,"text":"男性肝癌","data":65.7,"fileName":"B2.csv"},
+      {"name": "結腸直腸癌", "size": 10,"text":"男性結腸直腸癌","data":70.8,"fileName":"B3.csv"},
+      {"name": "口腔癌", "size": 10,"text":"男性口腔癌","data":58.4,"fileName":"B4.csv"},
+      {"name": "食道癌", "size": 10,"text":"男性食道癌","data":60.4,"fileName":"B5.csv"},
+      {"name": "胃癌", "size": 10,"text":"男性胃癌","data":72.8,"fileName":"B6.csv"},
+      {"name": "攝護腺癌", "size": 10,"text":"男性攝護腺癌","data":79.8,"fileName":"B7.csv"},
+      {"name": "胰臟癌", "size": 10,"text":"男性胰臟癌","data":68.1,"fileName":"B8.csv"},
+      {"name": "非何杰金淋巴癌", "size": 10,"text":"男性非何杰金淋巴癌","data":69,"fileName":"B9.csv"},
+      {"name": "膀胱癌", "size": 10,"text":"男性膀胱癌","data":76.3,"fileName":"B10.csv"}
+   ],
+   "text":"男性癌症",
+   "data":67.8,
+   "fileName":"BAll.csv"
+  },
+  {
+   "name": "女性",
+   "children": [
+      {"name": "肺癌", "size": 10,"text":"女性肺癌","data":70,"fileName":"G1.csv"},
+      {"name": "肝癌", "size": 10,"text":"女性肝癌","data":72.5,"fileName":"G2.csv"},
+      {"name": "結腸直腸癌", "size": 10,"text":"女性結腸直腸癌","data":71.2,"fileName":"G3.csv"},
+      {"name": "乳癌癌", "size": 10,"text":"女性乳癌","data":59.4,"fileName":"G4.csv"},
+      {"name": "胰臟癌", "size": 10,"text":"女性胰臟癌","data":71.1,"fileName":"G5.csv"},
+      {"name": "胃癌", "size": 10,"text":"女性胃癌","data":70.1,"fileName":"G6.csv"},
+      {"name": "子宮癌", "size": 10,"text":"女性子宮癌","data":67,"fileName":"G7.csv"},
+      {"name": "卵巢癌", "size": 10,"text":"女性卵巢癌","data":60.6,"fileName":"G8.csv"},
+      {"name": "非何杰金淋巴癌", "size": 10,"text":"女性非何杰金淋巴癌","data":70.7,"fileName":"G9.csv"},
+      {"name": "白血病", "size": 10,"text":"女性白血病","data":62.9,"fileName":"G10.csv"}
+   ],
+   "text":"女性癌症",
+   "data":68.5,
+   "fileName":"GAll.csv"
+  }
+ ],
+ "text":"全癌症",
+ "data":0
+
+
+}
